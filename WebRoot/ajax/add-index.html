@@ -1,0 +1,142 @@
+<html>
+
+<head>
+<meta charset="utf-8">
+
+<script type="text/javascript" charset="utf-8">
+	// Minimize Button in this Panel
+	jQuery('.minimize')
+			.click(
+					function() {
+						var t = jQuery(this);
+						var p = t.closest('.panel');
+						if (!jQuery(this).hasClass('maximize')) {
+							p
+									.find(
+											'.panel-body, .panel-footer')
+									.slideUp(200);
+							t.addClass('maximize');
+							t.html('&plus;');
+	
+							var mainpanelwidth = jQuery(
+									'.mainpanel').width();
+							var tabwidth = parseInt(mainpanelwidth - 20);
+	
+							jQuery('#tt')
+									.css('width', tabwidth);
+						} else {
+							p
+									.find(
+											'.panel-body, .panel-footer')
+									.slideDown(200);
+							t.removeClass('maximize');
+							t.html('&minus;');
+	
+							var mainpanelwidth = jQuery(
+									'.mainpanel').width();
+							var tabwidth = parseInt(mainpanelwidth - 260);
+	
+							jQuery('#tt')
+									.css('width', tabwidth);
+						}
+						return false; 
+					});					
+	
+	//Add-index Button Click Event							
+	jQuery('#button-index-add').on('click', function() {
+		var index_name = jQuery('#text-index-add').val();
+		var index_class = jQuery('ul#type-index').children('li.active').children('a').attr('id');
+		
+		if (index_class === "gn-index") {
+			index_class = "常规指标";
+		} else if (index_class === "ct-index") {
+			index_class = "特征指标";
+		} else if (index_class === "ot-index") {
+			index_class = "其他指标";
+		} else {
+			index_class = null;
+		}
+				
+		jQuery.ajax({
+			type: 'POST',
+			url: 'GdWaterServlet',
+			context: this,
+			data: {
+				servicename: "index-db-service",
+				servicetype: "add-index",
+				index_name: index_name,
+				index_class: index_class
+			},
+			success: function(data) {
+				if (data.success_add_index) {
+					jQuery.gritter.add({
+							// (string | mandatory) the heading of the notification
+							title: '系统消息',
+							// (string | mandatory) the text inside the notification
+							text: data.message_add_index,
+							 class_name: 'growl-success',
+							// (string | optional) the image to display on the left
+							image: 'images/screen.png',
+							// (bool | optional) if you want it to fade out on its own or just sit there
+							sticky: false,
+							// (int | optional) the time you want it to be alive for before fading out
+							time: 5000
+						});
+					jQuery('#new').modal('hide');
+					getAllIndex();
+				} else {
+					jQuery.gritter.add({
+						// (string | mandatory) the heading of the notification
+						title: '系统消息',
+						// (string | mandatory) the text inside the notification
+						text: '请检查数据库，亦或数据库未连接',
+						 class_name: 'growl-warning',
+						// (string | optional) the image to display on the left
+						image: 'images/screen.png',
+						// (bool | optional) if you want it to fade out on its own or just sit there
+						sticky: false,
+						// (int | optional) the time you want it to be alive for before fading out
+						time: 5000
+					});
+				}				
+			},
+			error: function(e) {
+				jQuery.gritter.add({
+					// (string | mandatory) the heading of the notification
+					title: '警告',
+					// (string | mandatory) the text inside the notification
+					text: '异常错误',
+					 class_name: 'growl-danger',
+					// (string | optional) the image to display on the left
+					image: 'images/screen.png',
+					// (bool | optional) if you want it to fade out on its own or just sit there
+					sticky: false,
+					// (int | optional) the time you want it to be alive for before fading out
+					time: 5000
+				});
+			},
+			dataType: "json"
+		});
+	});
+</script>
+</head>
+
+<body>
+	<div class="panel panel-dark panel-alt widget-add-index">
+		<div class="panel-heading">
+			<div class="panel-btns">
+				<a href="" class="minimize">&minus;</a>
+			</div>
+			<!-- panel-btns -->
+			<h3 class="panel-title">添加指标</h3>
+		</div>
+
+		<div class="panel-body">
+			<input id="text-index-add" type="text" class="form-control" placeholder="请输入要添加的指标名称" />
+			<button id="button-index-add" class="btn btn-primary btn-block mt10">添加</button>
+		</div>
+	</div>
+</body>
+
+</html>
+
