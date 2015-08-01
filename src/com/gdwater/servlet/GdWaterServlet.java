@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
 
+import com.gdwater.service.AHPDBService;
 import com.gdwater.service.IndexDBService;
 
 /**
@@ -52,10 +53,16 @@ public class GdWaterServlet extends HttpServlet {
 		switch(servicename) {
 			case "index-db-service":
 				IndexDBService indexdbservice = new IndexDBService();	
-				indexdbservice.setJsonObj();
+				indexdbservice.setJsonObj(jsonObj);
 				indexdbservice.setRequest(request);
 				indexdbservice.serviceProcess();				
 				jsonObj = indexdbservice.getJsonObj();
+			case "ahp-db-service":
+				AHPDBService ahpdbservice = new AHPDBService();
+				ahpdbservice.setJsonObj(jsonObj);
+				ahpdbservice.setRequest(request);
+				ahpdbservice.serviceProcess();
+				jsonObj = ahpdbservice.getJsonObj();
 			default:
 				break;
 		}	

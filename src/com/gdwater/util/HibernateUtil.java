@@ -113,9 +113,10 @@ final public class HibernateUtil {
 	}
 	
 	//统一查询方法
-	public static List executeQuery(String hql, String [] parameters) {
+	@SuppressWarnings("unchecked")
+	public static <T> List<T> executeQuery(String hql, String [] parameters) {
 		Session session = null;
-		List list = null;
+		List<T> list = null;
 		
 		try {
 			

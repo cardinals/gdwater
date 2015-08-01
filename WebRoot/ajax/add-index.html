@@ -82,8 +82,9 @@
 							// (int | optional) the time you want it to be alive for before fading out
 							time: 5000
 						});
-					jQuery('#new').modal('hide');
-					getAllIndex();
+					jQuery("text-index-add").val("");
+					jQuery("#new_index").modal("hide");
+					getAllIndexMana();
 				} else {
 					jQuery.gritter.add({
 						// (string | mandatory) the heading of the notification

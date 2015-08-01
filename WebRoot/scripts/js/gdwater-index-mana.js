@@ -10,7 +10,7 @@
 /**********************************************/
 
 /****************** Function ******************/
-/* 1.getAllIndex 获取指标库中所有的指标 */
+/* 1.getAllIndexMana 获取指标库中所有的指标 */
 /* 2.deleteCheckedIndex 删除选中指标 */
 /* 3.drawPaginationAllIndex 绘制分页(指标库中所有指标) */
 /* 4.drawPaginationStyleAllIndex 绘制分页样式(指标库中所有指标) */
@@ -27,7 +27,7 @@ jQuery(document).ready(function() {
 	"use strict";
 
 	// Page Preloader
-	jQuery("#preloader_index_mana").delay(1000).fadeOut(function() {
+	jQuery("#preloader_index_mana").delay(3000).fadeOut(function() {
 		jQuery("#contentpanel_func_1_1").delay(1000).css({
 			"overflow" : "visible"
 		});
@@ -40,7 +40,7 @@ jQuery(document).ready(function() {
 
 	// Index Remove Button 'Click' Event
 	jQuery(".index_button_remove").click(function() {
-		jQuery("input[type='checkbox']:checked").each(function() {
+		jQuery("#table_all_index input[type='checkbox']:checked").each(function() {
 			var c = jQuery(this);
 			var check_id = c.attr("id");
 			var index_type = check_id.split("_")[1].toString();
@@ -52,7 +52,7 @@ jQuery(document).ready(function() {
 
 	// Index Refresh Button 'Click' Event
 	jQuery(".index_button_refresh").click(function() {
-		getAllIndex();
+		getAllIndexMana();
 	});
 
 	// Index Type Selection
@@ -68,10 +68,10 @@ jQuery(document).ready(function() {
 		});
 		c.addClass("active");
 
-		getAllIndex();
+		getAllIndexMana();
 	});
 
-	getAllIndex();
+	getAllIndexMana();
 });
 
 /**
@@ -79,9 +79,9 @@ jQuery(document).ready(function() {
  * 
  * @returns {Void}
  */
-function getAllIndex() {
+function getAllIndexMana() {
 	jQuery("#table_all_index > tbody").empty();
-	jQuery("#pagination").empty();
+	jQuery("#pagination_mana").empty();
 	jQuery("#table_all_index").next("div").children("span").html("共 0 条记录");
 
 	// 当前激活的指标类型（Active）
@@ -204,7 +204,7 @@ function deleteCheckedIndex(indexnamechecked, indextypechecked) {
 					time : 5000
 				});
 
-				getAllIndex();
+				getAllIndexMana();
 			} else {
 				jQuery.gritter.add({
 					title : "系统消息",
@@ -286,7 +286,7 @@ function drawPaginationAllIndex(rowcount, indexname, indextype, curpage) {
  */
 function drawPaginationStyleAllIndex(pagenum, curpage, rowcount, perpageitem,
 		indexname, indextype) {
-	jQuery("#pagination").empty();
+	jQuery("#pagination_mana").empty();
 	var perpagegroupnum = 5; // 5页一组
 	var pagegroup = parseInt(pagenum / perpagegroupnum) + 1;
 	var curpagegroup = 1;
@@ -297,45 +297,45 @@ function drawPaginationStyleAllIndex(pagenum, curpage, rowcount, perpageitem,
 	}
 
 	if (parseInt(pagenum) <= parseInt(perpagegroupnum)) {
-		var pages = "<li><a href='javascript:void(0)' id='page-prev'>«</a></li>";
+		var pages = "<li><a href='javascript:void(0)' id='page-prev-mana'>«</a></li>";
 		for (var i = 1; i < pagenum + 1; i++) {
-			pages += "<li><a href='javascript:void(0)' id='page-" + i + "'>"
+			pages += "<li><a href='javascript:void(0)' id='page-mana-" + i + "'>"
 					+ i + "</a></li>";
 		}
-		pages += "<li><a href='javascript:void(0)' id='page-next'>»</a></li>";
-		jQuery("#pagination").append(pages);
+		pages += "<li><a href='javascript:void(0)' id='page-next-mana'>»</a></li>";
+		jQuery("#pagination_mana").append(pages);
 
 		if (curpage === 1) {
-			jQuery("#page-prev").parent("li").addClass("am-disabled");
-			jQuery("#page-1").parent("li").addClass("am-active");
+			jQuery("#page-prev-mana").parent("li").addClass("am-disabled");
+			jQuery("#page-mana-1").parent("li").addClass("am-active");
 		}
 		if (curpage === pagenum) {
-			jQuery("#page-next").parent("li").addClass("am-disabled");
+			jQuery("#page-next-mana").parent("li").addClass("am-disabled");
 		}
 
 		for (var i = 1; i < pagenum + 1; i++) {
-			jQuery("#page-" + i)
+			jQuery("#page-mana-" + i)
 					.bind(
 							"click",
 							function() {
 								var id = this.id;
 								var cur_page = parseInt(id.toString()
-										.substring(5));
+										.substring(10));
 								drawPaginationStyleAllIndex(pagenum,
 										parseInt(cur_page), rowcount,
 										perpageitem, indexname, indextype);
 								drawDataTableAllIndex(perpageitem,
 										parseInt(cur_page), pagenum, rowcount,
 										indexname, indextype);
-								jQuery("#page-1").parent("li").removeClass(
+								jQuery("#page-mana-1").parent("li").removeClass(
 										"am-active");
-								jQuery("#page-" + cur_page).parent("li")
+								jQuery("#page-mana-" + cur_page).parent("li")
 										.addClass("am-active");
 								curpage = parseInt(cur_page);
 							});
 		}
 
-		jQuery("#page-next").bind(
+		jQuery("#page-next-mana").bind(
 				"click",
 				function() {
 					var cur_page = parseInt(curpage);
@@ -344,13 +344,13 @@ function drawPaginationStyleAllIndex(pagenum, curpage, rowcount, perpageitem,
 							perpageitem, indexname, indextype);
 					drawDataTableAllIndex(perpageitem, curpage, pagenum,
 							rowcount, indexname, indextype);
-					jQuery("#page-" + cur_page).parent("li").removeClass(
+					jQuery("#page-mana-" + cur_page).parent("li").removeClass(
 							"am-active");
-					jQuery("#page-" + curpage).parent("li").addClass(
+					jQuery("#page-mana-" + curpage).parent("li").addClass(
 							"am-active");
 				});
 
-		jQuery("#page-prev").bind(
+		jQuery("#page-prev-mana").bind(
 				"click",
 				function() {
 					var cur_page = parseInt(curpage);
@@ -359,82 +359,82 @@ function drawPaginationStyleAllIndex(pagenum, curpage, rowcount, perpageitem,
 							perpageitem, indexname, indextype);
 					drawDataTableAllIndex(perpageitem, curpage, pagenum,
 							rowcount, indexname, indextype);
-					jQuery("#page-" + cur_page).parent("li").removeClass(
+					jQuery("#page-mana-" + cur_page).parent("li").removeClass(
 							"am-active");
-					jQuery("#page-" + curpage).parent("li").addClass(
+					jQuery("#page-mana-" + curpage).parent("li").addClass(
 							"am-active");
 				});
 	} else {
-		var pages = "<li><a href='javascript:void(0)' id='page-prev'>«</a></li>";
+		var pages = "<li><a href='javascript:void(0)' id='page-prev-mana'>«</a></li>";
 		if (curpagegroup < pagegroup) {
 			for (var i = ((curpagegroup - 1) * perpagegroupnum) + 1; i < (curpagegroup * perpagegroupnum) + 1; i++) {
-				pages += "<li><a href='javascript:void(0)' id='page-" + i
+				pages += "<li><a href='javascript:void(0)' id='page-mana-" + i
 						+ "'>" + i + "</a></li>";
 			}
 		} else if (curpagegroup === pagegroup) {
 			for (var i = ((curpagegroup - 1) * perpagegroupnum) + 1; i < pagenum; i++) {
-				pages += "<li><a href='javascript:void(0)' id='page-" + i
+				pages += "<li><a href='javascript:void(0)' id='page-mana-" + i
 						+ "'>" + i + "</a></li>";
 			}
 		}
-		pages += "<li><a href='javascript:void(0)' id='page-next'>»</a></li>";
-		jQuery("#pagination").append(pages);
+		pages += "<li><a href='javascript:void(0)' id='page-next-mana'>»</a></li>";
+		jQuery("#pagination_mana").append(pages);
 
 		if (curpage === 1) {
-			jQuery("#page-prev").parent("li").addClass("am-disabled");
-			jQuery("#page-1").parent("li").addClass("am-active");
+			jQuery("#page-prev-mana").parent("li").addClass("am-disabled");
+			jQuery("#page-mana-1").parent("li").addClass("am-active");
 		}
 		if (curpage === pagenum) {
-			jQuery("#page-next").parent("li").addClass("am-disabled");
+			jQuery("#page-next-mana").parent("li").addClass("am-disabled");
 		}
 
 		if (curpagegroup < pagegroup) {
 			for (var i = ((curpagegroup - 1) * perpagegroupnum) + 1; i < (curpagegroup * perpagegroupnum) + 1; i++) {
-				jQuery("#page-" + i)
+				jQuery("#page-mana-" + i)
 						.bind(
 								"click",
 								function() {
 									var id = this.id;
 									var cur_page = parseInt(id.toString()
-											.substring(5));
+											.substring(10));
 									drawPaginationStyleAllIndex(pagenum,
 											parseInt(cur_page), rowcount,
 											perpageitem, indexname, indextype);
 									drawDataTableAllIndex(perpageitem,
 											parseInt(cur_page), pagenum,
 											rowcount, indexname, indextype);
-									jQuery("#page-" + curpage).parent("li")
+									jQuery("#page-mana-" + curpage).parent("li")
 											.removeClass("am-active");
-									jQuery("#page-" + cur_page).parent("li")
+									jQuery("#page-mana-" + cur_page).parent("li")
 											.addClass("am-active");
 									curpage = parseInt(cur_page);
 								});
 			}
 		} else if (curpagegroup === pagegroup) {
 			for (var i = ((curpagegroup - 1) * perpagegroupnum) + 1; i < pagenum; i++) {
-				jQuery("#page-" + i)
+				jQuery("#page-mana-" + i)
 						.bind(
 								"click",
 								function() {
 									var id = this.id;
 									var cur_page = parseInt(id.toString()
-											.substring(5));
+											.substring(10));
 									drawPaginationStyleAllIndex(pagenum,
 											parseInt(cur_page), rowcount,
 											perpageitem, indexname, indextype);
 									drawDataTableAllIndex(perpageitem,
 											parseInt(cur_page), pagenum,
 											rowcount, indexname, indextype);
-									jQuery("#page-" + curpage).parent("li")
+									jQuery("#page-mana-" + curpage).parent("li")
 											.removeClass("am-active");
-									jQuery("#page-" + cur_page).parent("li")
+									jQuery("#page-mana-" + cur_page).parent("li")
 											.addClass("am-active");
 									curpage = parseInt(cur_page);
 								});
 			}
 		}
 
-		jQuery("#page-next").bind(
+		jQuery("#page-next-mana").bind(
 				"click",
 				function() {
 					if (curpage % perpagegroupnum !== 0) {
@@ -444,9 +444,9 @@ function drawPaginationStyleAllIndex(pagenum, curpage, rowcount, perpageitem,
 								perpageitem, indexname, indextype);
 						drawDataTableAllIndex(perpageitem, curage, pagenum,
 								rowcount, indexname, indextype);
-						jQuery("#page-" + cur_page).parent("li").removeClass(
+						jQuery("#page-mana-" + cur_page).parent("li").removeClass(
 								"am-active");
-						jQuery("#page-" + curpage).parent("li").addClass(
+						jQuery("#page-mana-" + curpage).parent("li").addClass(
 								"am-active");
 					} else if (curpage % perpagegroupnum === 0) {
 						curpage = curpage + 1;
@@ -455,13 +455,13 @@ function drawPaginationStyleAllIndex(pagenum, curpage, rowcount, perpageitem,
 						drawDataTableAllIndex(perpageitem, curage, pagenum,
 								rowcount, indexname, indextype);
 						if (curpage % perpagegroupnum === 1) {
-							jQuery("#page-" + curpage).parent("li").addClass(
+							jQuery("#page-mana-" + curpage).parent("li").addClass(
 									"am-active");
 						}
 					}
 				});
 
-		jQuery("#page-prev").bind(
+		jQuery("#page-prev-mana").bind(
 				"click",
 				function() {
 					if (curpage % perpagegroupnum !== 1) {
@@ -471,9 +471,9 @@ function drawPaginationStyleAllIndex(pagenum, curpage, rowcount, perpageitem,
 								perpageitem, indexname, indextype);
 						drawDataTableAllIndex(perpageitem, curage, pagenum,
 								rowcount, indexname, indextype);
-						jQuery("#page-" + cur_page).parent("li").removeClass(
+						jQuery("#page-mana-" + cur_page).parent("li").removeClass(
 								"am-active");
-						jQuery("#page-" + curpage).parent("li").addClass(
+						jQuery("#page-mana-" + curpage).parent("li").addClass(
 								"am-active");
 					} else if (curpage % perpagegroupnum === 1) {
 						curpage = curpage - 1;
@@ -482,7 +482,7 @@ function drawPaginationStyleAllIndex(pagenum, curpage, rowcount, perpageitem,
 						drawDataTableAllIndex(perpageitem, curage, pagenum,
 								rowcount, indexname, indextype);
 						if (curpage % perpagegroupnum === 0) {
-							jQuery("#page-" + curpage).parent("li").addClass(
+							jQuery("#page-mana-" + curpage).parent("li").addClass(
 									"am-active");
 						}
 					}

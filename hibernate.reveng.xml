@@ -7,7 +7,23 @@
 			<generator class="sequence"></generator>
 		</primary-key>
 	</table>
-<table name="t_index_select" schema="public" class="IndexSelect">
+	<table name="t_index_select" schema="public" class="IndexSelect">
+		<primary-key>
+			<generator class="sequence"></generator>
+		</primary-key>
+	</table>
+	<table name="t_pollution_type" schema="public"
+		class="PollutionType">
+		<primary-key>
+			<generator class="sequence"></generator>
+		</primary-key>
+	</table>
+	<table name="t_ahplayer_one" schema="public" class="AHPLayerOne">
+		<primary-key>
+			<generator class="sequence"></generator>
+		</primary-key>
+	</table>
+<table name="t_ahplayer_two" schema="public" class="AHPLayerTwo">
 	<primary-key>
 		<generator class="sequence"></generator>
 	</primary-key>

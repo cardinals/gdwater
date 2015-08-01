@@ -15,8 +15,8 @@
         <property name="indexId" type="java.lang.String">
             <column name="index_id" length="36" not-null="true" />
         </property>
-        <property name="indexType" type="java.lang.String">
-            <column name="index_type" length="64" not-null="true" />
+        <property name="pollutionType" type="java.lang.String">
+            <column name="pollution_type" length="64" not-null="true" />
         </property>
         <property name="indexName" type="java.lang.String">
             <column name="index_name" length="64" not-null="true" />

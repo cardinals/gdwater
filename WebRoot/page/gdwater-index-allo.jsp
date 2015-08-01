@@ -27,23 +27,91 @@
 			</div>
 		</div>
 
-		<section>
-			<div class="row">
-				<div class="col-sm-12">
-					<p>
-						<span style="font-size:16px;">请选择自定义指标</span>
-					</p>
-					<div id="index_panel">
-						<div class="col-md-4"></div>
-						<div class="col-md-4"></div>
-						<div class="col-md-4"></div>
+		<section>			
+			<div class="col-sm-12">
+				<div class="row">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<div class="panel-btns">
+				                <a href="" class="panel-close">&times;</a>
+				                <a href="" class="minimize">&minus;</a>
+			              	</div><!-- panel-btns -->
+			              	<h3 class="panel-title">为不同污染类型分配指标：</h3>
+						</div>
+						<div class="panel-body">
+							<p>
+								<span style="font-size:16px;">请选择污染类型：</span>
+							</p>
+							<div class="row">
+								<div class="col-sm-3">
+									<select class="select2" data-placeholder="请选择一个污染类型" 
+									id="select_pollutiontype">
+										<option></option>
+									</select>
+									<label class="error" for="fruits"></label>
+								</div>
+								<div class="col-sm-3">
+									<a href="ajax/add-pollutiontype.html"
+										class="btn btn-primary tooltips" data-toggle="modal"
+										data-target="#new_pollutiontype" title="增加污染类型" 
+										data-placement="top">
+										添加污染类型
+									</a>
+								</div>
+							</div>
+							<p>
+								<span style="font-size:16px;">请为选定污染类型分配指标：</span>
+							</p>
+							<div class="row">
+								<div class="index_panel" id="index_container">
+									<div class="col-sm-3"></div>
+									<div class="col-sm-3"></div>
+									<div class="col-sm-3"></div>
+									<div class="col-sm-3"></div>
+								</div>
+							</div>
+							
+							<p class="mb20"></p>
+							
+							<button type="button" class="btn btn-primary"
+								id="save_checked_index" style="float:right; 
+								margin-right:20px;">保存</button>
+						</div>
 					</div>
-					<div class="mb20"></div>
-					<button type="button" class="btn btn-primary"
-						id="save_checked_index" style="float:right; margin-right:20px;">保存</button>
+					
+					
 				</div>
 			</div>
+<!-- 			<div class="col-sm-12">
+				<div class="row">
+					<div class="col-sm-12">
+						<p>
+							<span style="font-size:16px;">请为不同污染类型指定自定义指标：</span>
+						</p>
+						<div class="table-responsive">
+							<table class="table table-info mb30" id="user_index_allo" style="postion:absolute;">
+								<thead>
+									<tr>
+										<th style="text-align:center;">#</th>                        
+			                      	</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+						<button type="button" class="btn btn-primary"
+							id="save_checked_index" style="float:right; margin-right:20px;">保存</button>
+					</div> 
+				</div>
+			</div> -->
 		</section>
+	</div>
+	
+	<div id="new_pollutiontype" class="modal bs-modal-panel" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content"></div>
+		</div>
 	</div>
 </body>
 </html>

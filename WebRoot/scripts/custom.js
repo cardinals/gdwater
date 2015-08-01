@@ -23,91 +23,11 @@ jQuery(window).load(function() {
 	});
 });
 
-function addTabActiveChangeEvent (old_cl, count) {
-	setInterval(function() {
-		// 当前已生成的Tab数目
-		var len = jQuery("#tabs-nav > li").length;
-		
-		jQuery("#tabs-nav > li").each(function() {							
-			var c = jQuery(this);
-			// 遍历到当前Tab的id
-			var tab_id = c.attr("id"); 
-			// 遍历到当前Tab的class属性名
-			var tab_cl = c.attr("class");			
-			if (!tab_cl) {
-				tab_cl = null;
-			}
-			
-			if (tab_cl !== old_cl[count] && old_cl[count] === null) {
-//				if (tab_id === "func-0") {
-//					jQuery("script").each(function() {
-//						var s = jQuery(this);
-//						if (s.attr("src") === "scripts/js/gdwater-index-mana.js") {
-//							jQuery("script[src='scripts/js/gdwater-index-mana.js']").remove();
-//						} else if (s.attr("src") === "scripts/js/gdwater-index-allo.js") {
-//							jQuery("script[src='scripts/js/gdwater-index-allo.js']").remove();
-//						} else if (s.attr("src") === "scripts/js/gdwater-index-thre.js") {
-//							jQuery("script[src='scripts/js/gdwater-index-thre.js']").remove();
-//						}
-//					});
-//				} else if (tab_id === "func-1-1") {
-//					jQuery("script").each(function() {
-//						var s = jQuery(this);
-//						alert(s.attr("src"))
-//						if (s.attr("src") === "scripts/js/gdwater-index-allo.js") {
-//							jQuery("script[src='scripts/js/gdwater-index-allo.js']").remove();
-//						} else if (s.attr("src") === "scripts/js/gdwater-index-thre.js") {
-//							jQuery("script[src='scripts/js/gdwater-index-thre.js']").remove();
-//						}
-//					});
-//				} else if (tab_id === "func-1-2") {
-//					jQuery("script").each(function() {
-//						var s = jQuery(this);
-//						if (s.attr("src") === "scripts/js/gdwater-index-mana.js") {
-//							jQuery("script[src='scripts/js/gdwater-index-mana.js']").remove();
-//						} else if (s.attr("src") === "scripts/js/gdwater-index-thre.js") {
-//							jQuery("script[src='scripts/js/gdwater-index-thre.js']").remove();
-//						}
-//					});
-//				} else if (tab_id === "func-1-2") {
-//					jQuery("script").each(function() {
-//						var s = jQuery(this);
-//						if (s.attr("src") === "scripts/js/gdwater-index-mana.js") {
-//							jQuery("script[src='scripts/js/gdwater-index-mana.js']").remove();
-//						} else if (s.attr("src") === "scripts/js/gdwater-index-allo.js") {
-//							jQuery("script[src='scripts/js/gdwater-index-allo.js']").remove();
-//						} 
-//					});
-//				}
-//				old_cl[count] = "active";				
-			} else {
-				old_cl[count] = tab_cl;
-			}							
-										
-			if (count === len - 1) {
-				count = 0;
-			} else {
-				count ++;
-			}							
-		});
-	}, 10);
-}
 
 jQuery(document)
 		.ready(
 				function() {
 					"use strict";					
-					
-					// 每一Tab上一次监听时的class属性名
-					var old_cl = new Array(16);
-					// 初始化old_cl
-					for (var i=0; i<16; i++) {
-						old_cl[i] = null;
-					}
-					// Tab循环监听算子
-					var count = 0;
-					
-					addTabActiveChangeEvent(old_cl, count);	
 
 					// Get Document Width And Height
 					var w = jQuery(document).width();
@@ -424,7 +344,7 @@ jQuery(document)
 
 										if (!a.parent('li').hasClass(
 												'nav-parent')) {
-											if (name === "func-1-1") {
+											if (name === "func-1-1") {												
 												if (!checkRepeatTab(name)) {
 													return;
 												} else {
@@ -503,7 +423,36 @@ jQuery(document)
 																	false);
 												}
 											}
-										} else {
+											
+											else if (name === "func-2") {
+												if (!checkRepeatTab(name)) {
+													return;
+												} else {
+													removeTabActiveClass();
+
+													var new_tab_nav = "<li class='active' id='func-2'><a href='#content-AHP' "
+															+ "data-toggle='tab'><i class='fa fa-check'></i>"
+															+ "<strong>专家评分</strong><i class='glyphicon glyphicon-remove'>"
+															+ "</i></a></li>";
+
+													var new_tab_panel = "<div class='tab-pane active' "
+															+ "id='content-AHP'></div>";
+
+													jQuery('#tabs-nav').append(
+															new_tab_nav);
+													jQuery('#tabs-panel')
+															.append(
+																	new_tab_panel);
+
+													jQuery(
+															'#content-AHP')
+															.load(
+																	"page/gdwater-AHP.jsp",
+																	false);
+												}
+											} 
+										} 										
+										else {
 											return;
 										}
 

@@ -1,0 +1,623 @@
+<html>
+
+<head>
+<meta charset="utf-8">
+
+<script type="text/javascript" charset="utf-8">
+	jQuery(document).ready(function() {
+		getPollutionType();
+	});
+	
+	// Tooltip
+	jQuery(".tooltips").tooltip({
+		container : "body"
+	});
+	
+	// PollutionType Remove Button 'Click' Event
+	jQuery(".pollutiontype_button_remove")
+			.click(
+					function() {
+						jQuery(
+								"#table_pollution_type input[type='checkbox']:checked")
+								.each(
+										function() {
+											var c = jQuery(this);
+											var checked_id = c
+													.attr("id");
+											var pollution_type = checked_id
+													.split("_")[1];
+
+											deletePollutionType(pollution_type);
+										});
+					});
+	
+	// PollutionType Refresh Button 'Click' Event
+	jQuery(".pollutiotype_button_refresh").click(function() {
+		getPollutionType();
+	});
+	
+	// PollutionType Add Button 'Click' Event
+	jQuery(".pollutiontype_button_add").click(function() {
+		var c = jQuery(this);
+		var p = c.parent().parent().parent().after("<div class='row'><input " +
+		"id='text-pollutiontype-add' type='text' class='form-control' " +
+		"placeholder='请输入要添加的指标名称' style='width:300px;float:left;'/>" +
+		"<button id='button-pollutiontype-add' class='btn btn-primary btn-block' " +
+		"style='width:100px;float:left;margin-left:30px;'>添加</button></div>");
+		var d = jQuery("#table_pollution_type").parent().parent().before("<div class='mb20'></div>");
+		
+		//Add-index Button Click Event							
+		jQuery('#button-pollutiontype-add').on('click', function() {
+			var pollutiontypename = jQuery('#text-pollutiontype-add').val();
+							
+			jQuery.ajax({
+				type: 'POST',
+				url: 'GdWaterServlet',
+				context: this,
+				data: {
+					servicename: "index-db-service",
+					servicetype: "add-pollutiontype",
+					pollutiontypename: pollutiontypename
+				},
+				success: function(data) {
+					if (data.success_add_pollutiontype) {
+						jQuery.gritter.add({
+								title: '系统消息',
+								text: data.message_add_pollutiontype,
+								 class_name: 'growl-success',
+								image: 'images/screen.png',
+								sticky: false,
+								time: 5000
+							});
+						
+						getPollutionType();
+						
+						c.parent().parent().parent().next().empty();
+						c.parent().parent().parent().next().remove();
+						jQuery("#table_pollution_type").parent().parent().prev().empty();
+						jQuery("#table_pollution_type").parent().parent().prev().remove();
+					} else {
+						jQuery.gritter.add({
+							title: '系统消息',
+							text: '请检查数据库，亦或数据库未连接',
+							 class_name: 'growl-warning',
+							image: 'images/screen.png',
+							sticky: false,
+							time: 5000
+						});
+					}				
+				},
+				error: function(e) {
+					jQuery.gritter.add({
+						title: '警告',
+						text: '异常错误',
+						class_name: 'growl-danger',					
+						image: 'images/screen.png',
+						sticky: false,					
+						time: 5000
+					});
+				},
+				dataType: "json"
+			});			
+		});
+	});
+		
+	// Minimize Button in this Panel
+	jQuery('.minimize')
+			.click(
+					function() {
+						var t = jQuery(this);
+						var p = t.closest('.panel');
+						if (!jQuery(this).hasClass('maximize')) {
+							p
+									.find(
+											'.panel-body, .panel-footer')
+									.slideUp(200);
+							t.addClass('maximize');
+							t.html('&plus;');
+	
+							var mainpanelwidth = jQuery(
+									'.mainpanel').width();
+							var tabwidth = parseInt(mainpanelwidth - 20);
+	
+							jQuery('#tt')
+									.css('width', tabwidth);
+						} else {
+							p
+									.find(
+											'.panel-body, .panel-footer')
+									.slideDown(200);
+							t.removeClass('maximize');
+							t.html('&minus;');
+	
+							var mainpanelwidth = jQuery(
+									'.mainpanel').width();
+							var tabwidth = parseInt(mainpanelwidth - 260);
+	
+							jQuery('#tt')
+									.css('width', tabwidth);
+						}
+						return false; 
+					});	
+
+/**
+ * 删除选中的污染类型
+ * 
+ * @param {String}
+ *             pollution_type 污染类型
+ * 
+ * @returns {Void}
+ */					
+function deletePollutionType(pollution_type) {
+	jQuery.ajax({
+		type : "POST",
+		url : "GdWaterServlet",
+		context : this,
+		data : {
+			servicename : "index-db-service",
+			servicetype : "delete-pollution-type",
+			pollutiontype : pollution_type
+		},
+		success : function(data) {
+			if (data.success_delete_pollution_type) {
+				jQuery.gritter.add({
+					title : "系统消息",
+					text : data.message_delete_pollution_type,
+					class_name : "growl-success",
+					image : "images/screen.png",
+					sticky : false,
+					time : 5000
+				});
+
+				getPollutionType();
+			} else {
+				jQuery.gritter.add({
+					title : "系统消息",
+					text : "请检查数据库，亦或数据库未连接",
+					class_name : "growl-warning",
+					image : "images/screen.png",
+					sticky : false,
+					time : 5000
+				});
+			}
+		},
+		error : function(e) {
+			jQuery.gritter.add({
+				title : "警告",
+				text : "异常错误",
+				class_name : "growl-danger",
+				image : "images/screen.png",
+				sticky : false,
+				time : 5000
+			});
+		},
+		dataType : "json"
+	});
+}				
+
+/**
+ * 获取污染类型库中所有的污染类型
+ * 
+ * @returns {Void}
+ */	
+function getPollutionType() {
+	jQuery("#select_pollutiontype").empty();
+
+	jQuery.ajax({
+		type : "POST",
+		url : "GdWaterServlet",
+		async : false,
+		context : this,
+		data : {
+			servicename : "index-db-service",
+			servicetype : "get-all-pollution-type"
+		},
+		success : function(data) {
+			if (data.success_get_all_pollution_type) {
+				var len = data.pollutiontypeall.length;				
+
+				drawPaginationPollutionType(len, data.pollutiontypeall);
+			}
+		},
+		error : function(e) {
+			jQuery.gritter.add({
+				title : "警告",
+				text : "异常错误",
+				class_name : "growl-danger",
+				image : "images/screen.png",
+				sticky : false,
+				time : 5000
+			});
+		},
+		dataType : "json"
+	});
+}
+	
+/**
+ * 绘制分页
+ * 
+ * 
+ * @param {int}
+ *            rowcount 数据记录行数
+ * @param {String}
+ *            pollutiontype 污染类型数组
+ * @param {int}
+ *            curpage 当前页码
+ * 
+ * @returns {Void}
+ */
+function drawPaginationPollutionType(rowcount, pollutiontype, curpage) {
+	// 当前页数
+	var curpage = 1;
+	// 每页记录条数
+	var perpageitem = 5;
+	// 页码数
+	var pagenum = 1;
+
+	if (rowcount % perpageitem === 0) {
+		pagenum = parseInt(rowcount / perpageitem);
+	} else {
+		pagenum = parseInt(rowcount / perpageitem) + 1;
+	}
+
+	drawPaginationStylePollutionType(pagenum, curpage, rowcount, perpageitem,
+			pollutiontype);
+
+	drawDataTablePollutionType(perpageitem, curpage, pagenum, rowcount,
+			pollutiontype);
+}
+
+/**
+ * 绘制分页样式
+ * 
+ * @param {int}
+ *            pagenum 页码数
+ * @param {int}
+ *            curpage 当前页码
+ * @param {int}
+ *            rowcount 数据记录行数
+ * @param {int}
+ *            parpageitem 每页记录条数
+ * @param {String[]}
+ *            pollutiontype 污染类型数组
+ * 
+ * @returns {Void}
+ */
+function drawPaginationStylePollutionType(pagenum, curpage, rowcount,
+		perpageitem, pollutiontype) {
+	jQuery("#pagination_pollutiontype").empty();
+	var perpagegroupnum = 5; // 5页一组
+	var pagegroup = parseInt(pagenum / perpagegroupnum) + 1;
+	var curpagegroup = 1;
+	if (curpage % perpagegroupnum === 0) {
+		curpagegroup = parseInt(curpage / perpagegroupnum);
+	} else if (curpage % perpagegroupnum !== 0) {
+		curpagegroup = parseInt(curpage / perpagegroupnum) + 1;
+	}
+
+	if (parseInt(pagenum) <= parseInt(perpagegroupnum)) {
+		var pages = "<li><a href='javascript:void(0)' id='page-prev-pollutiontype'>«</a></li>";
+		for (var i = 1; i < pagenum + 1; i++) {
+			pages += "<li><a href='javascript:void(0)' id='page-pollutiontype-"
+					+ i + "'>" + i + "</a></li>";
+		}
+		pages += "<li><a href='javascript:void(0)' id='page-next-pollutiontype'>»</a></li>";
+		jQuery("#pagination_pollutiontype").append(pages);
+
+		if (curpage === 1) {
+			jQuery("#page-prev-pollutiontype").parent("li").addClass(
+					"am-disabled");
+			jQuery("#page-pollutiontype-1").parent("li").addClass("am-active");
+		}
+		if (curpage === pagenum) {
+			jQuery("#page-next-pollutiontype").parent("li").addClass(
+					"am-disabled");
+		}
+
+		for (var i = 1; i < pagenum + 1; i++) {
+			jQuery("#page-pollutiontype-" + i).bind(
+					"click",
+					function() {
+						var id = this.id;
+						var cur_page = parseInt(id.toString().substring(10));
+						drawPaginationStylePollutionType(pagenum,
+								parseInt(cur_page), rowcount, perpageitem,
+								pollutiontype);
+						drawDataTablePollutionType(perpageitem,
+								parseInt(cur_page), pagenum, rowcount,
+								pollutiontype);
+						jQuery("#page-pollutiontype-1").parent("li")
+								.removeClass("am-active");
+						jQuery("#page-pollutiontype-" + cur_page).parent("li")
+								.addClass("am-active");
+						curpage = parseInt(cur_page);
+					});
+		}
+
+		jQuery("#page-next-pollutiontype").bind(
+				"click",
+				function() {
+					var cur_page = parseInt(curpage);
+					curpage = parseInt(cur_page + 1);
+					drawPaginationStylePollutionType(pagenum, curpage,
+							rowcount, perpageitem, pollutiontype);
+					drawDataTablePollutionType(perpageitem, curpage, pagenum,
+							rowcount, pollutiontype);
+					jQuery("#page-pollutiontype-" + cur_page).parent("li")
+							.removeClass("am-active");
+					jQuery("#page-pollutiontype-" + curpage).parent("li")
+							.addClass("am-active");
+				});
+
+		jQuery("#page-prev-pollutiontype").bind(
+				"click",
+				function() {
+					var cur_page = parseInt(curpage);
+					curpage = parseInt(cur_page - 1);
+					drawPaginationStylePollutionType(pagenum, curpage,
+							rowcount, perpageitem, pollutiontype);
+					drawDataTablePollutionType(perpageitem, curpage, pagenum,
+							rowcount, pollutiontype);
+					jQuery("#page-pollutiontype-" + cur_page).parent("li")
+							.removeClass("am-active");
+					jQuery("#page-pollutiontype-" + curpage).parent("li")
+							.addClass("am-active");
+				});
+	} else {
+		var pages = "<li><a href='javascript:void(0)' id='page-prev-pollutiontype'>«</a></li>";
+		if (curpagegroup < pagegroup) {
+			for (var i = ((curpagegroup - 1) * perpagegroupnum) + 1; i < (curpagegroup * perpagegroupnum) + 1; i++) {
+				pages += "<li><a href='javascript:void(0)' id='page-pollutiontype-"
+						+ i + "'>" + i + "</a></li>";
+			}
+		} else if (curpagegroup === pagegroup) {
+			for (var i = ((curpagegroup - 1) * perpagegroupnum) + 1; i < pagenum; i++) {
+				pages += "<li><a href='javascript:void(0)' id='page-pollutiontype-"
+						+ i + "'>" + i + "</a></li>";
+			}
+		}
+		pages += "<li><a href='javascript:void(0)' id='page-next-pollutiontype'>»</a></li>";
+		jQuery("#pagination_pollutiontype").append(pages);
+
+		if (curpage === 1) {
+			jQuery("#page-prev-pollutiontype").parent("li").addClass(
+					"am-disabled");
+			jQuery("#page-pollutiontype-1").parent("li").addClass("am-active");
+		}
+		if (curpage === pagenum) {
+			jQuery("#page-next-pollutiontype").parent("li").addClass(
+					"am-disabled");
+		}
+
+		if (curpagegroup < pagegroup) {
+			for (var i = ((curpagegroup - 1) * perpagegroupnum) + 1; i < (curpagegroup * perpagegroupnum) + 1; i++) {
+				jQuery("#page-pollutiontype-" + i)
+						.bind(
+								"click",
+								function() {
+									var id = this.id;
+									var cur_page = parseInt(id.toString()
+											.substring(10));
+									drawPaginationStylePollutionType(pagenum,
+											parseInt(cur_page), rowcount,
+											perpageitem, pollutiontype);
+									drawDataTablePollutionType(perpageitem,
+											parseInt(cur_page), pagenum,
+											rowcount, pollutiontype);
+									jQuery("#page-pollutiontype-" + curpage)
+											.parent("li").removeClass(
+													"am-active");
+									jQuery("#page-pollutiontype-" + cur_page)
+											.parent("li").addClass("am-active");
+									curpage = parseInt(cur_page);
+								});
+			}
+		} else if (curpagegroup === pagegroup) {
+			for (var i = ((curpagegroup - 1) * perpagegroupnum) + 1; i < pagenum; i++) {
+				jQuery("#page-pollutiontype-" + i)
+						.bind(
+								"click",
+								function() {
+									var id = this.id;
+									var cur_page = parseInt(id.toString()
+											.substring(10));
+									drawPaginationStylePollutionType(pagenum,
+											parseInt(cur_page), rowcount,
+											perpageitem, pollutiontype);
+									drawDataTablePollutionType(perpageitem,
+											parseInt(cur_page), pagenum,
+											rowcount, pollutiontype);
+									jQuery("#page-pollutiontype-" + curpage)
+											.parent("li").removeClass(
+													"am-active");
+									jQuery("#page-pollutiontype-" + cur_page)
+											.parent("li").addClass("am-active");
+									curpage = parseInt(cur_page);
+								});
+			}
+		}
+
+		jQuery("#page-next-pollutiontype").bind(
+				"click",
+				function() {
+					if (curpage % perpagegroupnum !== 0) {
+						var cur_page = parseInt(curpage);
+						curpage = parseInt(cur_page + 1);
+						drawPaginationStylePollutionType(pagenum, curpage,
+								rowcount, perpageitem, pollutiontype);
+						drawDataTablePollutionType(perpageitem, curage,
+								pagenum, rowcount, pollutiontype);
+						jQuery("#page-pollutiontype-" + cur_page).parent("li")
+								.removeClass("am-active");
+						jQuery("#page-pollutiontype-" + curpage).parent("li")
+								.addClass("am-active");
+					} else if (curpage % perpagegroupnum === 0) {
+						curpage = curpage + 1;
+						drawPaginationStylePollutionType(pagenum, curpage,
+								rowcount, perpageitem, pollutiontype);
+						drawDataTablePollutionType(perpageitem, curage,
+								pagenum, rowcount, pollutiontype);
+						if (curpage % perpagegroupnum === 1) {
+							jQuery("#page-pollutiontype-" + curpage).parent(
+									"li").addClass("am-active");
+						}
+					}
+				});
+
+		jQuery("#page-prev-pollutiontype").bind(
+				"click",
+				function() {
+					if (curpage % perpagegroupnum !== 1) {
+						var cur_page = parseInt(curpage);
+						curpage = parseInt(cur_page - 1);
+						drawPaginationStylePollutionType(pagenum, curpage,
+								rowcount, perpageitem, pollutiontype);
+						drawDataTablePollutionType(perpageitem, curage,
+								pagenum, rowcount, pollutiontype);
+						jQuery("#page-pollutiontype-" + cur_page).parent("li")
+								.removeClass("am-active");
+						jQuery("#page-pollutiontype-" + curpage).parent("li")
+								.addClass("am-active");
+					} else if (curpage % perpagegroupnum === 1) {
+						curpage = curpage - 1;
+						drawPaginationStylePollutionType(pagenum, curpage,
+								rowcount, perpageitem, pollutiontype);
+						drawDataTablePollutionType(perpageitem, curage,
+								pagenum, rowcount, pollutiontype);
+						if (curpage % perpagegroupnum === 0) {
+							jQuery("#page-pollutiontype-" + curpage).parent(
+									"li").addClass("am-active");
+						}
+					}
+				});
+	}
+}
+
+/**
+ * 根据分页信息，动态绘制数据表
+ * 
+ * @param {int}
+ *            pagination 每页多少条数据
+ * @param {int}
+ *            curpage 当前第多少页
+ * @param {int}
+ *            pagenum 一共多少页
+ * @param {int}
+ *            rowcount 一共多少行数据
+ * @param {String[]}
+ *            pollutiontype 污染类型数组
+ * 
+ * @returns {Void}
+ */
+function drawDataTablePollutionType(pagination, curpage, pagenum, rowcount,
+		pollutiontype) {
+	jQuery('#table_pollution_type > tbody').empty();
+
+	if (parseInt(curpage) < parseInt(pagenum)) {
+		for (var i = parseInt(pagination) * (parseInt(curpage) - 1); i < parseInt(pagination)
+				* parseInt(curpage); i++) {
+			drawPollutionTypeList((i + 1), pollutiontype[i],
+					'#table_pollution_type > tbody');
+		}
+	} else {
+		for (var i = parseInt(pagination) * (parseInt(curpage) - 1); i < rowcount; i++) {
+			drawPollutionTypeList((i + 1), pollutiontype[i],
+					'#table_pollution_type > tbody');
+		}
+	}
+
+	jQuery("#table_pollution_type").next("div").children("span").html(
+			"共 " + parseInt(rowcount) + " 条记录");
+}
+
+/**
+ * 绘制指标列表
+ * 
+ * @param {int}
+ *            seq 序列
+ * @param {String}
+ *            pollutiontype 污染类型
+ * @param {String}
+ *            tablefilter 表过滤器
+ * 
+ * @returns {Void}
+ */
+function drawPollutionTypeList(seq, pollutiontype, tablefilter) {
+	var tbody = "<tr>";
+	var td_check_button = "<td><div class='ckbox ckbox-success'>"
+			+ "<input type='checkbox' id='checkbox_" + pollutiontype + "'>"
+			+ "<label for='checkbox_" + pollutiontype + "'></label></div></td>";
+	var td_index_info = "<td><div class='media'><div class='media-body'>"
+			+ "<span>"
+			+ seq
+			+ "</span><span class='ml50'></span>"
+			+ "<input type='text' id='pollutiontype_"
+			+ seq
+			+ "' class='form-control' "
+			+ "disabled='true' style='width:80%; height:35px; display:inline' "
+			+ "value='" + pollutiontype + "'/>" + "</div></div></td>";
+
+	tbody += td_check_button + td_index_info;
+
+	jQuery(tablefilter).append(tbody);
+}
+</script>
+</head>
+
+<body>
+	<div class="panel panel-dark panel-alt widget-add-index">
+		<div class="panel-heading">
+			<div class="panel-btns">
+				<a href="" class="minimize">&minus;</a>
+			</div>
+			<!-- panel-btns -->
+			<h3 class="panel-title">污染类型管理</h3>	
+		</div>
+		
+		<div class="panel-body">
+			<!-- <input id="text-pollutiontype-add" type="text" class="form-control" placeholder="请输入要添加的污染类型名称" />
+			<button id="button-pollutiontype-add" class="btn btn-primary btn-block mt10">添加</button> -->
+			<div class="col-sm-12">
+				<div class="row">
+					<div class="pull-right">
+						<div class="btn-group mr10" id="btn-mana">
+							<a class="btn btn-sm btn-white tooltips pollutiontype_button_add"
+							 title="增加" data-placement="top">
+								<i class="glyphicon glyphicon-plus"></i>
+							</a>
+							<button
+								class="btn btn-sm btn-white tooltips pollutiotype_button_refresh"
+								type="button" data-toggle="tooltip" data-placement="top"
+								title="刷新">
+								<i class="glyphicon glyphicon-refresh"></i>
+							</button>
+							<button
+								class="btn btn-sm btn-white tooltips pollutiontype_button_remove"
+								type="button" data-toggle="tooltip" data-placement="top"
+								title="删除">
+								<i class="glyphicon glyphicon-trash"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="table-responsive">
+						<table class="table table-index" id="table_pollution_type">
+							<tbody></tbody>
+						</table>
+						<div class="am-cf">
+							<div class="mb20"></div>
+							<span>共 条记录</span>
+							<div class="am-fr">
+								<ul class="am-pagination" id="pagination_pollutiontype"></ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
+

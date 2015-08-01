@@ -26,6 +26,9 @@
 		<property name="hbm2ddl.auto">update</property>
 		<mapping resource="com/gdwater/domain/Index.hbm.xml" />
 		<mapping resource="com/gdwater/domain/IndexSelect.hbm.xml" />
+		<mapping resource="com/gdwater/domain/PollutionType.hbm.xml" />
+		<mapping resource="com/gdwater/domain/AHPLayerOne.hbm.xml" />
+		<mapping resource="com/gdwater/domain/AHPLayerTwo.hbm.xml" />
 
 	</session-factory>
 

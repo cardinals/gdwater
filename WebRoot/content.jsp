@@ -22,7 +22,7 @@
 		</ul>
 
 		<!-- Tab panes -->
-		<div class="tab-content mb30" id="tabs-panel">
+		<div class="tab-content mb30" id="tabs-panel" style="background: #e4e7ea;">
 			<div class="tab-pane active" id="content-des">
 				<div class="content-des">
 					<div class="title">地下水污染应急监测及预警决策系统</div>

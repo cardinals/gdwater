@@ -35,6 +35,10 @@
 	charset="utf-8"></script>
 <script type="text/javascript" src="scripts/jquery.gritter.min.js"
 	charset="utf-8"></script>
+<script type="text/javascript" src="scripts/bootstrap-wizard.min.js" 
+	charset="utf-8"></script>
+<script type="text/javascript" src="scripts/select2.min.js" 
+	charset="utf-8"></script>
 <script type="text/javascript" src="scripts/custom.js" charset="utf-8"></script>
 
 <link type="text/css" rel="stylesheet" href="css/jquery.gritter.css" />
@@ -42,7 +46,7 @@
 
 </head>
 
-<body style="height:1105px;">
+<body style="height:3100px;">
 	<div id="preloader" class="preloader">
 		<div id="status">
 			<i class="fa fa-spinner fa-spin"></i>

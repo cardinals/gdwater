@@ -18,7 +18,7 @@ public class IndexSelect  implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
      private String indexId;
-     private String indexType;
+     private String pollutionType;
      private String indexName;
      private Double threshold;
 
@@ -30,16 +30,16 @@ public class IndexSelect  implements java.io.Serializable {
     }
 
 	/** minimal constructor */
-    public IndexSelect(String indexId, String indexType, String indexName) {
+    public IndexSelect(String indexId, String pollutionType, String indexName) {
         this.indexId = indexId;
-        this.indexType = indexType;
+        this.pollutionType = pollutionType;
         this.indexName = indexName;
     }
     
     /** full constructor */
-    public IndexSelect(String indexId, String indexType, String indexName, Double threshold) {
+    public IndexSelect(String indexId, String pollutionType, String indexName, Double threshold) {
         this.indexId = indexId;
-        this.indexType = indexType;
+        this.pollutionType = pollutionType;
         this.indexName = indexName;
         this.threshold = threshold;
     }
@@ -63,12 +63,12 @@ public class IndexSelect  implements java.io.Serializable {
         this.indexId = indexId;
     }
 
-    public String getIndexType() {
-        return this.indexType;
+    public String getPollutionType() {
+        return this.pollutionType;
     }
     
-    public void setIndexType(String indexType) {
-        this.indexType = indexType;
+    public void setPollutionType(String pollutionType) {
+        this.pollutionType = pollutionType;
     }
 
     public String getIndexName() {

@@ -44,10 +44,10 @@
 								<form class="btn-group mr10 searchform searchform_index_mana">
 									<input type="text" class="form-control" placeholder="搜索..." />
 								</form>
-								<div class="btn-group mr10">
+								<div class="btn-group mr10" id="btn-mana">
 									<a href="ajax/add-index.html"
 										class="btn btn-sm btn-white tooltips" data-toggle="modal"
-										data-target=".bs-modal-panel" title="增加" data-placement="top">
+										data-target="#new_index" title="增加" data-placement="top">
 										<i class="glyphicon glyphicon-plus"></i>
 									</a>
 									<button
@@ -81,7 +81,7 @@
 									<div class="mb20"></div>
 									<span>共 条记录</span>
 									<div class="am-fr">
-										<ul class="am-pagination" id="pagination"></ul>
+										<ul class="am-pagination" id="pagination_mana"></ul>
 									</div>
 								</div>
 							</div>
@@ -92,7 +92,7 @@
 		</section>
 	</div>
 
-	<div id="new" class="modal bs-modal-panel" tabindex="-1" role="dialog"
+	<div id="new_index" class="modal bs-modal-panel" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content"></div>
