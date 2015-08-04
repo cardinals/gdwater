@@ -29,7 +29,6 @@
 		<mapping resource="com/gdwater/domain/PollutionType.hbm.xml" />
 		<mapping resource="com/gdwater/domain/AHPLayerOne.hbm.xml" />
 		<mapping resource="com/gdwater/domain/AHPLayerTwo.hbm.xml" />
-
 	</session-factory>
 
 </hibernate-configuration>

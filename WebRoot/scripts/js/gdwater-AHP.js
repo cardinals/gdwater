@@ -564,6 +564,8 @@ function calculateResult() {
 		data: {
 			servicename : "ahp-db-service",
 			servicetype : "calculate-result",
+			"ahppollutiontype[]" : ahppollutiontype,
+			"ahpindex[]" : ahpindex,
 			"A" : A,
 			"B[]" : B
 		},
@@ -582,7 +584,6 @@ function calculateResult() {
 				var lamuda1 = data.lamuda1;
 				var consistantindex1 = data.consistantindex1;
 				var _consistantratiomsg = data._consistantratiomsg;
-				console.log(weightvector2);
 				
 				var ahptab3 = "<div class='col-sm-9'>";
 				ahptab3 += "<p>第一层污染类型（准则层）判断矩阵归一化后的矩阵</p>";
@@ -662,7 +663,6 @@ function calculateResult() {
 					ahptab3 += "</tr></tbody></table></div>";
 				}
 				
-				console.log(ahpindex);
 				ahptab3 += "</div>";
 				
 				jQuery("#ahptab3").append(ahptab3);

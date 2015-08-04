@@ -21,6 +21,7 @@ public class IndexSelect  implements java.io.Serializable {
      private String pollutionType;
      private String indexName;
      private Double threshold;
+     private Double weight;
 
 
     // Constructors
@@ -37,11 +38,12 @@ public class IndexSelect  implements java.io.Serializable {
     }
     
     /** full constructor */
-    public IndexSelect(String indexId, String pollutionType, String indexName, Double threshold) {
+    public IndexSelect(String indexId, String pollutionType, String indexName, Double threshold, Double weight) {
         this.indexId = indexId;
         this.pollutionType = pollutionType;
         this.indexName = indexName;
         this.threshold = threshold;
+        this.weight = weight;
     }
 
    
@@ -85,6 +87,14 @@ public class IndexSelect  implements java.io.Serializable {
     
     public void setThreshold(Double threshold) {
         this.threshold = threshold;
+    }
+
+    public Double getWeight() {
+        return this.weight;
+    }
+    
+    public void setWeight(Double weight) {
+        this.weight = weight;
     }
    
 

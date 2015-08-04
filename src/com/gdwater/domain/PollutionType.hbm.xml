@@ -15,5 +15,8 @@
         <property name="pollutionType" type="java.lang.String">
             <column name="pollution_type" length="128" not-null="true" />
         </property>
+        <property name="weight" type="java.lang.Double">
+            <column name="weight" precision="17" scale="17" />
+        </property>
     </class>
 </hibernate-mapping>

@@ -18,6 +18,7 @@ public class PollutionType  implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
      private String pollutionType;
+     private Double weight;
 
 
     // Constructors
@@ -26,10 +27,15 @@ public class PollutionType  implements java.io.Serializable {
     public PollutionType() {
     }
 
-    
-    /** full constructor */
+	/** minimal constructor */
     public PollutionType(String pollutionType) {
         this.pollutionType = pollutionType;
+    }
+    
+    /** full constructor */
+    public PollutionType(String pollutionType, Double weight) {
+        this.pollutionType = pollutionType;
+        this.weight = weight;
     }
 
    
@@ -50,13 +56,18 @@ public class PollutionType  implements java.io.Serializable {
     public void setPollutionType(String pollutionType) {
         this.pollutionType = pollutionType;
     }
-   
 
-
-
-
-
-
-
-
+    public Double getWeight() {
+        return this.weight;
+    }
+    
+    public void setWeight(Double weight) {
+        this.weight = weight;
+    }
+    
+    
+    
+    
+    
+    
 }

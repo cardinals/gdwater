@@ -6,9 +6,14 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import com.gdwater.domain.AHPLayerOne;
 import com.gdwater.domain.AHPLayerTwo;
 import com.gdwater.domain.IndexSelect;
+import com.gdwater.domain.PollutionType;
 import com.gdwater.service.ahp.MatixcBean;
 import com.gdwater.service.ahp.Matrix;
 import com.gdwater.service.ahp.level;
@@ -203,9 +208,11 @@ public class AHPDBService {
 		//准则层对目标层的相互权重矩阵
         //中间层对最高层
 		String S = this.request.getParameter("A");
-		
+		//污染类型
+		String[] ahppollutiontype = this.request.getParameterValues("ahppollutiontype[]");
+
 		//计算准则层对最高层的权重和一致性指数
-		if (S != null) {
+		if (S != null && ahppollutiontype != null) {
 			//创建矩阵
 			MatixcBean mb = new MatixcBean(S);
 			//获取矩阵
@@ -222,8 +229,37 @@ public class AHPDBService {
 			String consistantratiomsg2 = le.isConsistant() ? ", 小于<10%，符合一致性要求" : 
 				", 大于>10%，不符合一致性要求，请修改权重矩阵";
 			String consistantratiomsg = consistantratiomsg1 + consistantratiomsg2;
+			
+			for (int i=0; i<weightvector1.length; i++) {
+				Session session = HibernateUtil.openSession();
+				Transaction tx = null;
+				
+				try {
+					tx = session.beginTransaction();
+					Query query = session
+							.createQuery("update PollutionType pollutiontype set pollutiontype.weight = ? where pollutiontype.pollutionType = ?");
+					query.setDouble(0, weightvector1[i]);
+					query.setString(1, ahppollutiontype[i]);
+					query.executeUpdate();
+					session.flush();
+					tx.commit();
+				} catch (Exception e) {
+					if (tx != null) {
+						tx.rollback();
+					}
+					throw new RuntimeException(e.getMessage());
+				} finally {
+					if (session != null && session.isOpen()) {
+						session.clear();
+						session.close();
+					}
+				}
+				
+			}
+			
 			jsonObj.put("s", s);
 			jsonObj.put("weightvector1", weightvector1);
+			
 			if (lamuda != 0.0) {
 				jsonObj.put("lamuda", lamuda);
 			} 
@@ -239,7 +275,14 @@ public class AHPDBService {
 		//分别计算底层对准则层的权重和一致性指数
 		String[] S1 = this.request.getParameterValues("B[]"); 
 		
-		if (S1 != null) {
+		String[] ahpindex = this.request.getParameterValues("ahpindex[]");		
+		
+		if (S1 != null && ahpindex != null) {
+			String[][] ahpindexnew = new String[ahpindex.length][];
+			for (int i=0; i<ahpindex.length; i++) {
+				ahpindexnew[i] = ahpindex[i].split(",");
+			}
+			
 			//获取第二层矩阵数量
 			int S1_len = S1.length;
 			//第二层归一化矩阵特征值
@@ -293,6 +336,35 @@ public class AHPDBService {
 				tmp = tmp.append(m[1]);
 			} else {
 				tmp = m[0];
+			}
+			
+			for (int i=0; i<weightvector2.length; i++) {
+				for (int j=0; j<weightvector2[i].length; j++) {
+					Session session = HibernateUtil.openSession();
+					Transaction tx = null;
+					
+					try {
+						tx = session.beginTransaction();
+						Query query = session
+								.createQuery("update IndexSelect indexselect set indexselect.weight = ? where indexselect.pollutionType = ? and indexselect.indexName = ?");
+						query.setDouble(0, weightvector2[i][j]);
+						query.setString(1, ahppollutiontype[i]);
+						query.setString(2, ahpindexnew[i][j]);
+						query.executeUpdate();
+						session.flush();
+						tx.commit();
+					} catch (Exception e) {
+						if (tx != null) {
+							tx.rollback();
+						}
+						throw new RuntimeException(e.getMessage());
+					} finally {
+						if (session != null && session.isOpen()) {
+							session.clear();
+							session.close();
+						}
+					}
+				}
 			}
 			
 			jsonObj.put("b", b);
