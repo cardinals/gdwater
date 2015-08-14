@@ -451,6 +451,34 @@ jQuery(document)
 																	false);
 												}
 											} 
+											
+											else if (name === "func-4") {
+												if (!checkRepeatTab(name)) {
+													return;
+												} else {
+													removeTabActiveClass();
+													
+													var new_tab_nav = "<li class='active' id='func-4'><a href='#content-simulation' "
+														+ "data-toggle='tab'><i class='fa fa-check'></i>"
+														+ "<strong>三维仿真</strong><i class='glyphicon glyphicon-remove'>"
+														+ "</i></a></li>";
+													
+													var new_tab_panel = "<div class='tab-pane active' "
+														+ "id='content-simulation'></div>";
+													
+													jQuery('#tabs-nav').append(
+															new_tab_nav);
+													jQuery('#tabs-panel')
+															.append(
+																	new_tab_panel);
+													
+													jQuery(
+															'#content-simulation')
+															.load(
+																	"page/gdwater-simulation.jsp",
+																	false);
+												}
+											}
 										} 										
 										else {
 											return;
