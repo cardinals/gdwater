@@ -23,7 +23,13 @@
 			<generator class="sequence"></generator>
 		</primary-key>
 	</table>
-<table name="t_ahplayer_two" schema="public" class="AHPLayerTwo">
+	<table name="t_ahplayer_two" schema="public" class="AHPLayerTwo">
+		<primary-key>
+			<generator class="sequence"></generator>
+		</primary-key>
+	</table>
+<table name="t_pollution_source" schema="public"
+	class="PollutionSource">
 	<primary-key>
 		<generator class="sequence"></generator>
 	</primary-key>
