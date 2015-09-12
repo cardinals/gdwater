@@ -2,7 +2,6 @@ package com.gdwater.service;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,7 +12,6 @@ import org.hibernate.Transaction;
 import com.gdwater.domain.AHPLayerOne;
 import com.gdwater.domain.AHPLayerTwo;
 import com.gdwater.domain.IndexSelect;
-import com.gdwater.domain.PollutionType;
 import com.gdwater.service.ahp.MatixcBean;
 import com.gdwater.service.ahp.Matrix;
 import com.gdwater.service.ahp.level;

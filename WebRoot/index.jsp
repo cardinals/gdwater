@@ -21,8 +21,29 @@
 <meta name="keywords" content="keyword1,keyword2,keyword3">
 <meta name="description" content="This is index page">
 
+<!-- <script type="text/javascript" charset="utf-8">
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "http://localhost/arcgis_js_api/library/3.9/3.9compact/init.js", true);
+	xhr.send();
+		
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", "http://localhost/arcgis_js_api/library/3.9/3.9compact/js/dojo/dojo/dojo.js", true);
+	xhr.send();
+</script> -->
+
+<script type="text/javascript"> 
+	var init = document.createElement('script');
+	init.type = 'text/javascript';
+	init.async = false;
+	init.src = 'http://localhost/arcgis_js_api/library/3.9/3.9compact/init.js'; 
+	var x = document.getElementsByTagName('script')[0]; 
+	x.parentNode.insertBefore(init, x); 
+</script>
+
 <script type="text/javascript" src="scripts/jquery-1.11.1.min.js"
 	charset="utf-8"></script>
+<script type="text/javascript" src="scripts/jquery-ui.min.js"
+ 	charset="utf-8"></script>
 <script type="text/javascript" src="scripts/bootstrap.min.js"
 	charset="utf-8"></script>
 <script type="text/javascript" src="scripts/jquery-migrate-1.2.1.min.js"

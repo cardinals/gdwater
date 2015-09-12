@@ -24,5 +24,8 @@
         <property name="threshold" type="java.lang.Double">
             <column name="threshold" precision="17" scale="17" />
         </property>
+        <property name="weight" type="java.lang.Double">
+            <column name="weight" precision="17" scale="17" />
+        </property>
     </class>
 </hibernate-mapping>

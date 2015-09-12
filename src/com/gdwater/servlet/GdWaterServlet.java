@@ -12,6 +12,7 @@ import net.sf.json.JSONObject;
 
 import com.gdwater.service.AHPDBService;
 import com.gdwater.service.IndexDBService;
+import com.gdwater.service.SimulationDBService;
 
 /**
  * Servlet implementation class GdWaterServlet
@@ -63,6 +64,12 @@ public class GdWaterServlet extends HttpServlet {
 				ahpdbservice.setRequest(request);
 				ahpdbservice.serviceProcess();
 				jsonObj = ahpdbservice.getJsonObj();
+			case "simulation-db-service":
+				SimulationDBService simulationdbservice = new SimulationDBService();
+				simulationdbservice.setJsonObj(jsonObj);
+				simulationdbservice.setRequest(request);
+				simulationdbservice.serviceProcess();
+				jsonObj = simulationdbservice.getJsonObj();
 			default:
 				break;
 		}	
