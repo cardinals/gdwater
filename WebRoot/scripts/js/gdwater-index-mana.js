@@ -559,7 +559,7 @@ function drawAllIndexList(seq, indexname, indextype, tablefilter) {
 			+ "<input type='text' id='index_"
 			+ seq
 			+ "' class='form-control' "
-			+ "disabled='true' style='width:700px; height:35px; display:inline' "
+			+ "disabled='true' style='width:500px; height:35px; display:inline' "
 			+ "value='" + indexname + "'/>" + "</div></div></td>";
 
 	tbody += td_check_button + td_index_info;

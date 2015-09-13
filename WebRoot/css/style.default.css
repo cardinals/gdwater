@@ -18,6 +18,7 @@
  * 10.SignUp
  * 11.Content
  * 12.Index 指标库
+ * 13.Alarm 报警预警
 */
 
 /*****1.Import CSS File*****/
@@ -1329,4 +1330,45 @@ body.signin {
 	margin-left: auto;
 	margin-right: auto;
 	width: 96%;
+}
+
+/*****13Alarm*****/
+.table_alarmindex {
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	border-bottom: 1px solid #eee;
+	margin: 0;
+	background-color: #f7f7f7;
+}
+
+.alarm_table {
+	margin: 0 auto;
+	border-collapse: collapse;
+	border-color: ##8d8d8d;
+	line-height: 32px;
+	font-size: 14px;
+	text-align: center;
+	color: #D21313;	
+	z-index: 0;
+}
+
+.alarm_table_title {
+	width: 100%;
+	background: #b2cdc4;
+	font-size: 14px;
+	font-weight: bold;
+	color: #393939;
+	line-height: 30px;
+	height: 30px;
+}
+
+.alarm_table_cont {
+	font-size: 14px;
+	font-weight: bold;
+	color: #393939;
+	line-height: 30px;
+	height: 30px;
+	margin: 0;
+	padding: 0;
 }

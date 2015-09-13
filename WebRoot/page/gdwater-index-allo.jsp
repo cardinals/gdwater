@@ -48,7 +48,7 @@
 									id="select_pollutiontype">
 										<option></option>
 									</select>
-									<label class="error" for="fruits"></label>
+									<label class="error" for="select_pollutiontype"></label>
 								</div>
 								<div class="col-sm-3">
 									<a href="ajax/add-pollutiontype.html"

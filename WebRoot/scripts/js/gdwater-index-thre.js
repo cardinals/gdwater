@@ -608,14 +608,14 @@ function drawSelectedIndexList(seq, index_name, pollution_type, tablefilter) {
 			+ "<input type='text' id='index_"
 			+ seq
 			+ "' class='form-control' "
-			+ "disabled='true' style='width:700px; height:35px; display:inline' "
+			+ "disabled='true' style='width:400px; height:35px; display:inline' "
 			+ "value='"
 			+ index_name
 			+ "'/>"
 			+ "<div class='ml20' "
 			+ "style='display:inline'></div><input type='text' id='thre_"
 			+ seq
-			+ "' class='form-control'  style='width:200px;" 
+			+ "' class='form-control'  style='width:100px;" 
 			+ "height:35px; display:inline;' value='" + threshold[seq-1] + "'/>" + "</div></div></td>";
 
 	tbody += td_index_info;

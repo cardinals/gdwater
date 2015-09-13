@@ -49,7 +49,7 @@
 									id="thre_pollutiontype">
 										<option></option>
 									</select>
-									<label class="error" for="fruits"></label>
+									<label class="error" for="thre_pollutiontype"></label>
 								</div>
 							</div>
 							<form

@@ -43,19 +43,22 @@
 				</ul></li>
 			<li><a href="javascript:void(0)" data-name="func-2"><i
 					class="fa fa-check"></i> <span>专家评分</span></a></li>
-			<li><a href="javascript:void(0)" data-name="func-3"><i
-					class="fa fa-eye"></i> <span>应急决策</span></a></li>
+			<li><a href="javascript:void(0)" data-name="fun-3"><i 
+					class="glyphicon glyphicon-warning-sign">
+					</i> <span> 报警预警</span></a></li>
 			<li><a href="javascript:void(0)" data-name="func-4"><i
-					class="fa fa-map-marker"></i> <span>三维仿真</span></a></li>
+					class="fa fa-eye"></i> <span>应急决策</span></a></li>
 			<li><a href="javascript:void(0)" data-name="func-5"><i
-					class="fa fa-files-o"></i> <span>预案管理</span></a></li>
+					class="fa fa-map-marker"></i> <span>三维仿真</span></a></li>
 			<li><a href="javascript:void(0)" data-name="func-6"><i
-					class="fa fa-history"></i> <span>历史库及事故报告</span></a></li>
+					class="fa fa-files-o"></i> <span>预案管理</span></a></li>
 			<li><a href="javascript:void(0)" data-name="func-7"><i
-					class="fa fa-comments-o"></i> <span>后评估</span></a></li>
+					class="fa fa-history"></i> <span>历史库及事故报告</span></a></li>
 			<li><a href="javascript:void(0)" data-name="func-8"><i
-					class="fa fa-tags"></i> <span>行业规范</span></a></li>
+					class="fa fa-comments-o"></i> <span>后评估</span></a></li>
 			<li><a href="javascript:void(0)" data-name="func-9"><i
+					class="fa fa-tags"></i> <span>行业规范</span></a></li>
+			<li><a href="javascript:void(0)" data-name="func-10"><i
 					class="fa fa-user"></i> <span>用户管理</span></a></li>
 		</ul>
 	</div>

@@ -10,7 +10,6 @@
 /* 1. */
 /**********************************************/
 
-
 /***** Add Preloader *****/
 jQuery(window).load(function() {
 	"use strict";
@@ -23,11 +22,10 @@ jQuery(window).load(function() {
 	});
 });
 
-
 jQuery(document)
 		.ready(
 				function() {
-					"use strict";					
+					"use strict";
 
 					// Get Document Width And Height
 					var w = jQuery(document).width();
@@ -301,7 +299,6 @@ jQuery(document)
 						}
 					}
 
-					
 					// Check if leftpanel is collapsed
 					if (jQuery('body').hasClass('leftpanel-collapsed'))
 						jQuery('.nav-bracket .children').css({
@@ -323,8 +320,8 @@ jQuery(document)
 										jQuery('.leftpanelinner > ul > li')
 												.each(
 														function() {
-															var t = jQuery(this);																							
-															
+															var t = jQuery(this);
+
 															if (t
 																	.hasClass('active')) {
 																t
@@ -344,7 +341,7 @@ jQuery(document)
 
 										if (!a.parent('li').hasClass(
 												'nav-parent')) {
-											if (name === "func-1-1") {												
+											if (name === "func-1-1") {
 												if (!checkRepeatTab(name)) {
 													return;
 												} else {
@@ -423,7 +420,7 @@ jQuery(document)
 																	false);
 												}
 											}
-											
+
 											else if (name === "func-2") {
 												if (!checkRepeatTab(name)) {
 													return;
@@ -444,34 +441,61 @@ jQuery(document)
 															.append(
 																	new_tab_panel);
 
-													jQuery(
-															'#content-AHP')
+													jQuery('#content-AHP')
 															.load(
 																	"page/gdwater-AHP.jsp",
 																	false);
 												}
-											} 
-											
-											else if (name === "func-4") {
+											}
+
+											else if (name === "fun-3") {
 												if (!checkRepeatTab(name)) {
 													return;
 												} else {
 													removeTabActiveClass();
-													
-													var new_tab_nav = "<li class='active' id='func-4'><a href='#content-simulation' "
-														+ "data-toggle='tab'><i class='fa fa-check'></i>"
-														+ "<strong>三维仿真</strong><i class='glyphicon glyphicon-remove'>"
-														+ "</i></a></li>";
-													
+
+													var new_tab_nav = "<li class='active' id='func-3'><a href='#content-alarm' "
+															+ "data-toggle='tab'><i class='glyphicon glyphicon-warning-sign'></i>"
+															+ "<strong>报警预警</strong><i class='glyphicon glyphicon-remove'>"
+															+ "</i></a></li>";
+
 													var new_tab_panel = "<div class='tab-pane active' "
-														+ "id='content-simulation'></div>";
-													
+															+ "id='content-alarm'></div>";
+
 													jQuery('#tabs-nav').append(
 															new_tab_nav);
 													jQuery('#tabs-panel')
 															.append(
 																	new_tab_panel);
-													
+
+													jQuery(
+															'#content-alarm')
+															.load(
+																	"page/gdwater-alarm.jsp",
+																	false);
+												}
+											}
+
+											else if (name === "func-5") {
+												if (!checkRepeatTab(name)) {
+													return;
+												} else {
+													removeTabActiveClass();
+
+													var new_tab_nav = "<li class='active' id='func-5'><a href='#content-simulation' "
+															+ "data-toggle='tab'><i class='fa fa-check'></i>"
+															+ "<strong>三维仿真</strong><i class='glyphicon glyphicon-remove'>"
+															+ "</i></a></li>";
+
+													var new_tab_panel = "<div class='tab-pane active' "
+															+ "id='content-simulation'></div>";
+
+													jQuery('#tabs-nav').append(
+															new_tab_nav);
+													jQuery('#tabs-panel')
+															.append(
+																	new_tab_panel);
+
 													jQuery(
 															'#content-simulation')
 															.load(
@@ -479,8 +503,7 @@ jQuery(document)
 																	false);
 												}
 											}
-										} 										
-										else {
+										} else {
 											return;
 										}
 

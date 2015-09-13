@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONObject;
 
 import com.gdwater.service.AHPDBService;
+import com.gdwater.service.AlarmDBService;
 import com.gdwater.service.IndexDBService;
 import com.gdwater.service.SimulationDBService;
 
@@ -70,6 +71,12 @@ public class GdWaterServlet extends HttpServlet {
 				simulationdbservice.setRequest(request);
 				simulationdbservice.serviceProcess();
 				jsonObj = simulationdbservice.getJsonObj();
+			case "alarm-db-service":
+				AlarmDBService alarmdbservice = new AlarmDBService();
+				alarmdbservice.setJsonObj(jsonObj);
+				alarmdbservice.setRequest(request);
+				alarmdbservice.serviceProcess();
+				jsonObj = alarmdbservice.getJsonObj();
 			default:
 				break;
 		}	
