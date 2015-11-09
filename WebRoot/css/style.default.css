@@ -30,6 +30,8 @@
 
 @import url('select2.css');
 
+@import url('jquery-ui.min.css');
+
 /*****2.Default Style*****/
 body {
 	background: #1d2939;
