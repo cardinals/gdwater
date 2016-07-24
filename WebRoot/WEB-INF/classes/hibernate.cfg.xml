@@ -21,7 +21,6 @@
 			org.postgresql.Driver
 		</property>
 
-		<property name="show_sql">true</property>
 		<property name="format_sql">true</property>
 		<property name="hbm2ddl.auto">update</property>
 		<mapping resource="com/gdwater/domain/Index.hbm.xml" />
@@ -29,7 +28,8 @@
 		<mapping resource="com/gdwater/domain/PollutionType.hbm.xml" />
 		<mapping resource="com/gdwater/domain/AHPLayerOne.hbm.xml" />
 		<mapping resource="com/gdwater/domain/AHPLayerTwo.hbm.xml" />
-		<mapping resource="com/gdwater/domain/PollutionSource.hbm.xml" />
+		<mapping resource="com/gdwater/domain/Monitor.hbm.xml" />
+		<mappint resource="com/gdwater/domain/GW_SIMU_PLUSRC.hbm.xml" />
 	</session-factory>
 
 </hibernate-configuration>

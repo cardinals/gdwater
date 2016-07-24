@@ -28,8 +28,13 @@
 			<generator class="sequence"></generator>
 		</primary-key>
 	</table>
-<table name="t_pollution_source" schema="public"
-	class="PollutionSource">
+	<table name="t_pollution_source" schema="public"
+		class="PollutionSource">
+		<primary-key>
+			<generator class="sequence"></generator>
+		</primary-key>
+	</table>
+<table name="t_monitor" schema="public" class="Monitor">
 	<primary-key>
 		<generator class="sequence"></generator>
 	</primary-key>

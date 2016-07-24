@@ -482,13 +482,13 @@ jQuery(document)
 												} else {
 													removeTabActiveClass();
 
-													var new_tab_nav = "<li class='active' id='func-5'><a href='#content-simulation' "
+													var new_tab_nav = "<li class='active' id='func-5'><a href='#content-3dsimulation' "
 															+ "data-toggle='tab'><i class='fa fa-check'></i>"
 															+ "<strong>三维仿真</strong><i class='glyphicon glyphicon-remove'>"
 															+ "</i></a></li>";
 
 													var new_tab_panel = "<div class='tab-pane active' "
-															+ "id='content-simulation'></div>";
+															+ "id='content-3dsimulation'></div>";
 
 													jQuery('#tabs-nav').append(
 															new_tab_nav);
@@ -497,9 +497,9 @@ jQuery(document)
 																	new_tab_panel);
 
 													jQuery(
-															'#content-simulation')
+															'#content-3dsimulation')
 															.load(
-																	"page/gdwater-simulation.jsp",
+																	"page/gdwater-3dsimulation.jsp",
 																	false);
 												}
 											}
